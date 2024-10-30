@@ -1,22 +1,19 @@
 plugins {
-    alias(libs.plugins.android.application)
+    alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
 }
 
 android {
-    namespace = "com.example.getup"
+    namespace = "com.example.core"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.getup"
         minSdk = 24
-        targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -35,11 +32,11 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures{
-        viewBinding = true
-    }
     kapt {
         correctErrorTypes = true
+    }
+    buildFeatures{
+        viewBinding = true
     }
 }
 
@@ -48,11 +45,11 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    implementation(libs.androidx.activity)
-    implementation(libs.androidx.constraintlayout)
-    implementation(project(":presentation"))
+
+    implementation(project(":domain"))
 
     implementation(libs.hilt.android)
+    implementation(libs.androidx.activity)
     kapt(libs.hilt.android.compiler)
 
     testImplementation(libs.junit)
